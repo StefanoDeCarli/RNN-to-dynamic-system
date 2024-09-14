@@ -9,8 +9,8 @@ The code consists of the following main components:
 1. `net_to_model.m`: The primary function for testing the code.
 2. `utilities`: A folder containing utility functions required for the process.
 3. `tester.m`: A script to test the functionality of the training process using a provided dataset.
-4. `SMI_data.mat`: A sample dataset for testing and validation purposes.
-5. `test_net.md`: A sample trained network for testing and validation purposes.
+4. `data`: Contains dataset for testing and validation purposes.
+5. `net`: Contains trained network for testing and validation purposes.
 
 ## net_to_model.m
 

@@ -8,10 +8,17 @@ rng(random_seed);
 % Utility functions directory
 addpath(genpath([pwd, filesep, 'utilities']));
 
-load("SMI_data.mat");
-load("test_net.mat")
+% Load dataset
+data = load(fullfile('data', 'SMI_data.mat'));
+varName = fieldnames(data);   % Get the field name(s) in the structure
+data = data.(varName{1});     % Access the contents using dynamic field referencing
 
-dataset = SMI_data.validation_30s;
+% Load net
+net_to_use = load(fullfile('net', 'test_net.mat'));
+varName = fieldnames(net_to_use);   % Get the field name(s) in the structure
+net_to_use = net_to_use.(varName{1});     % Access the contents using dynamic field referencing
+
+dataset = data.validation_30s;
 
 % Just for this dataset
 dataset.x = transpose_cell(dataset.x);
@@ -22,7 +29,7 @@ trial = 2;
 input = dataset.x{trial};
 
 % Extract the weights from the net
-weigths = RNN_extract_weights(net_results.net);
+weigths = RNN_extract_weights(net_to_use.net);
 % Initialize the state for each prediction
 state = initialize_state(weigths);
 
@@ -30,7 +37,7 @@ state = initialize_state(weigths);
 [output, state_storage] = net_model(input,weigths,state);
 
 % Predict with network
-nn_pred = predict(net_results.net, dataset.x{trial})';
+nn_pred = predict(net_to_use.net, dataset.x{trial})';
 
 % Select the output to visualize in comparison
 which_output = 7;
